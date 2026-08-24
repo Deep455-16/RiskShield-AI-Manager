@@ -1,0 +1,9 @@
+;Auto-generated Diamond Directive File. Can be deleted without harm.
+.Set CabinetNameTemplate=c:\Users\rav62\Downloads\riskshield-ai\riskshield-ai\~RiskShield-Installer.CAB
+.Set CompressionType=LZX
+.Set CompressionLevel=7
+.Set InfFileName=c:\Users\rav62\Downloads\riskshield-ai\riskshield-ai\~RiskShield-Installer_LAYOUT.INF
+.Set RptFileName=c:\Users\rav62\Downloads\riskshield-ai\riskshield-ai\~RiskShield-Installer.RPT
+.Set MaxDiskSize=CDROM
+.Set ReservePerCabinetSize=0
+.Set InfCabinetLineFormat=*cab#*=Application Source Media,*cabfile*,0
