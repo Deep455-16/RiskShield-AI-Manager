@@ -3,22 +3,27 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
-  Shield, TrendingUp, Activity, Zap, Monitor,
-  AlertTriangle, FileText, CheckCircle, Lock, Play, Settings, Briefcase, Building,
-  Database, Scale
+  Shield, TrendingUp, Activity, Monitor,
+  AlertTriangle, FileText, CheckCircle, Lock, Play, Settings,
+  Database, Scale, Eye, Building2, ClipboardList, Vote
 } from 'lucide-react'
 
 const links = [
   { href: '/',             label: 'Risk Dashboard',       icon: Shield },
   { href: '/transactions', label: 'Transactions & Fraud', icon: Activity },
   { href: '/risk',         label: 'Threat Analysis',      icon: TrendingUp },
-  { href: '/incidents',    label: 'Incident Reports',     icon: AlertTriangle },
-  { href: '/policies',     label: 'Compliance Policies',  icon: FileText },
-  { href: '/compliance',   label: 'Regulatory Status',    icon: CheckCircle },
+  { href: '/incidents',    label: 'Incident & CAPA',      icon: AlertTriangle },
+  { href: '/agents',       label: 'Agent Governance',     icon: Monitor },
+  { href: '/shadow-ai',    label: 'Shadow AI Discovery',  icon: Eye },
+  { href: '/systems',      label: 'AI System Registry',   icon: Monitor },
+  { href: '/compliance',   label: 'Compliance Register',  icon: CheckCircle },
+  { href: '/policies',     label: 'Policy Management',    icon: FileText },
+  { href: '/vendors',      label: 'Vendor Risk',          icon: Building2 },
+  { href: '/tasks',        label: 'Task Management',      icon: ClipboardList },
+  { href: '/approvals',    label: 'Approval Gates',       icon: Vote },
   { href: '/audit',        label: 'Audit Trail',          icon: Lock },
   { href: '/datahub',      label: 'Data Hub',             icon: Database },
   { href: '/ethical-ai',   label: 'Ethical AI',           icon: Scale },
-  { href: '/systems',      label: 'AI Models',            icon: Monitor },
   { href: '/simulator',    label: 'Risk Simulator',       icon: Play },
 ]
 
@@ -31,7 +36,7 @@ export default function NavSidebar() {
       {/* Logo */}
       <div className="p-6 border-b border-slate-100 flex items-center gap-3">
         <div className="bg-blue-900 p-2 rounded-lg">
-          <Building className="w-6 h-6 text-white shrink-0" />
+          <Building2 className="w-6 h-6 text-white shrink-0" />
         </div>
         <div>
           <div className="font-extrabold text-base text-slate-900 tracking-tight">TrustBank AI</div>

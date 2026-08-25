@@ -34,6 +34,12 @@
       "namedRegex": "^/agents(?:/)?$"
     },
     {
+      "page": "/approvals",
+      "regex": "^/approvals(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/approvals(?:/)?$"
+    },
+    {
       "page": "/audit",
       "regex": "^/audit(?:/)?$",
       "routeKeys": {},
@@ -88,6 +94,12 @@
       "namedRegex": "^/settings(?:/)?$"
     },
     {
+      "page": "/shadow-ai",
+      "regex": "^/shadow\\-ai(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/shadow\\-ai(?:/)?$"
+    },
+    {
       "page": "/simulator",
       "regex": "^/simulator(?:/)?$",
       "routeKeys": {},
@@ -100,10 +112,22 @@
       "namedRegex": "^/systems(?:/)?$"
     },
     {
+      "page": "/tasks",
+      "regex": "^/tasks(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/tasks(?:/)?$"
+    },
+    {
       "page": "/transactions",
       "regex": "^/transactions(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/transactions(?:/)?$"
+    },
+    {
+      "page": "/vendors",
+      "regex": "^/vendors(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/vendors(?:/)?$"
     }
   ],
   "dataRoutes": [],

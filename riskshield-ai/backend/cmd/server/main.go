@@ -22,6 +22,7 @@ import (
 	"github.com/riskshield-ai/backend/internal/risk"
 	"github.com/riskshield-ai/backend/internal/store"
 	"github.com/riskshield-ai/backend/internal/datasets"
+	"github.com/riskshield-ai/backend/internal/governance"
 )
 
 func main() {
@@ -55,6 +56,7 @@ func main() {
 	riskSvc := risk.NewService(db, auditSvc)
 	policySvc := policy.NewService(db, riskSvc, auditSvc)
 	jobSvc := jobs.NewService(db)
+	govSvc := governance.NewService(db, auditSvc)
 
 	registry := datasets.NewRegistry("../data")
 	replayEngine := datasets.NewReplayEngine(registry, db, riskSvc, policySvc)
@@ -97,7 +99,7 @@ func main() {
 		w.Write([]byte(`{"status":"ready"}`))
 	})
 
-	api.RegisterRoutes(r, db, authSvc, auditSvc, riskSvc, policySvc, jobSvc, jwtSecret, registry, replayEngine)
+	api.RegisterRoutes(r, db, authSvc, auditSvc, riskSvc, policySvc, jobSvc, jwtSecret, registry, replayEngine, govSvc)
 
 	port := os.Getenv("PORT")
 	if port == "" {

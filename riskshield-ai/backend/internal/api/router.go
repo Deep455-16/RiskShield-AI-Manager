@@ -10,11 +10,14 @@ import (
 	"github.com/riskshield-ai/backend/internal/store"
 	mw "github.com/riskshield-ai/backend/internal/middleware"
 	"github.com/riskshield-ai/backend/internal/datasets"
+	"github.com/riskshield-ai/backend/internal/governance"
 )
 
 func RegisterRoutes(r chi.Router, db *store.DB, authSvc *auth.Service, auditSvc *audit.Service,
 	riskSvc *risk.Service, policySvc *policy.Service, jobSvc *jobs.Service, jwtSecret string,
-	registry *datasets.Registry, replayEngine *datasets.ReplayEngine) {
+	registry *datasets.Registry, replayEngine *datasets.ReplayEngine, govSvc *governance.Service) {
+	
+	govHandlers := NewGovernanceHandlers(govSvc)
 
 	// Public routes
 	r.Post("/api/v1/auth/register", handleRegister(authSvc))
@@ -27,6 +30,8 @@ func RegisterRoutes(r chi.Router, db *store.DB, authSvc *auth.Service, auditSvc 
 		r.Use(mw.TenantIsolation)
 
 		r.Post("/api/v1/auth/logout", handleLogout)
+
+		govHandlers.RegisterRoutes(r)
 
 		// Datasets
 		r.Get("/api/v1/datasets", handleListDatasets(registry))
@@ -93,5 +98,34 @@ func RegisterRoutes(r chi.Router, db *store.DB, authSvc *auth.Service, auditSvc 
 		// Simulator
 		r.Post("/api/v1/simulate/payment", handleSimulatePayment(riskSvc, policySvc))
 		r.Post("/api/v1/simulate/attack", handleSimulateAttack(riskSvc, policySvc, auditSvc))
+
+		// Phase 2: Agent extensions
+		r.Get("/api/v1/agents/{id}/behavior-logs", handleGetAgentBehaviorLogs(db))
+		r.Post("/api/v1/agents/{id}/kill-switch", handleAgentKillSwitch(db))
+
+		// Phase 2: Shadow AI
+		r.Get("/api/v1/shadow-ai", handleListShadowAI(db))
+		r.Post("/api/v1/shadow-ai/discover", handleShadowAIDiscover(db))
+
+		// Phase 2: Vendors (override existing)
+		r.Get("/api/v1/vendors", handleListVendors(db))
+
+		// Phase 3: Tasks
+		r.Get("/api/v1/tasks", handleListTasks(db))
+		r.Post("/api/v1/tasks", handleCreateTask(db))
+		r.Patch("/api/v1/tasks/{id}/status", handleUpdateTaskStatus(db))
+
+		// Phase 3: Approval voting (override the old decide endpoint)
+		r.Get("/api/v1/approvals/workflows", handleListApprovalWorkflows(db))
+		r.Post("/api/v1/approvals/{id}/vote", handleApprovalVote(db))
+
+		// Phase 3: Reports (proper generation)
+		r.Post("/api/v1/reports", handleGenerateReport(db))
+
+		// Phase 3: Dashboard snapshot
+		r.Get("/api/v1/dashboard/snapshot", handleDashboardSnapshot(db))
+
+		// Phase 3: Audit export
+		r.Get("/api/v1/audit-logs/export", handleAuditExport(db))
 	})
 }
